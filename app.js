@@ -5,7 +5,7 @@ const weatherBox=document.querySelector(".current-weather")
 const locationIcon=document.getElementById("location")
 
 const API_KEY="8de96e03977a35091423bcb03881e99e";
-const BASE_URL=`https://api.openweathermap.org/data/2.5/weather`
+const BASE_URL=`https://api.openweathermap.org/data/2.5`
 
 
 
@@ -40,7 +40,7 @@ const renderCurrentWeather=async(data)=>{
                 <img src="https://openweathermap.org/img/w/${weather[0].icon}.png" />
               </div>
               <span id="temprature-description">${weather[0].description}</span>
-              <span id="temprature-degree">${Math.round(temp)} C</span>
+              <span id="temprature-degree">${Math.round(temp)} °C</span>
             </div>
             <div class="Weather-data">
               <div>Humidity: <span id="humidity">${humidity}%</span></div>
@@ -58,7 +58,7 @@ const renderCurrentWeather=async(data)=>{
 }
 const getCurrentWeatherByName=async(cityName)=>{
 
-    const url=`${BASE_URL}?q=${cityName}&appid=${API_KEY}&units=metric`
+    const url=`${BASE_URL}/weather?q=${cityName}&appid=${API_KEY}&units=metric`
     const response=await fetch(url)
     const data=await response.json()
     
@@ -66,9 +66,39 @@ const getCurrentWeatherByName=async(cityName)=>{
           
 }
 
+const getCurrentWeatherByLocation=async(lat,lon)=>{
+    const url=`${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+
+    const response=await fetch(url)
+    const data=await response.json()
+    
+    renderCurrentWeather(data)
+}
+
+const sucess=async (position)=>{
+    console.log(position);
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+
+    const currentData=await getCurrentWeatherByLocation(lat,lon)
+  }
+const error=(error)=>{
+    alert(error.message)
+} 
+const locationHandler=()=>{
+    if(!navigator.geolocation){
+        alert("Geolocation is not supported by your browser")
+    }else{
+
+        navigator.geolocation.getCurrentPosition(sucess,error)
+        
+
+    }
+}
+
 
 searchButton.addEventListener("click",searchHandler)
-
+locationIcon.addEventListener("click",locationHandler)
 
 
 
