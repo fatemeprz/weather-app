@@ -1,3 +1,5 @@
+import { showModal } from "./modal.js";
+
 const API_KEY="8de96e03977a35091423bcb03881e99e";
 const BASE_URL=`https://api.openweathermap.org/data/2.5`
 
@@ -5,7 +7,7 @@ const getWeatherData=async(type,data)=>{
 
     let url=null;
     const defaultCity="tehran"
-    console.log(data);
+    
 
     switch (type) {
 
@@ -34,10 +36,15 @@ const getWeatherData=async(type,data)=>{
 
             break;
     }
-     
-    const response=await fetch(url)
-    const json=await response.json()
-    return json
+     try{
+
+         const response=await fetch(url)
+         const json=await response.json()
+         return json
+     }
+     catch{
+        showModal("Sorry, An error accured!")
+     }
 }
 
 

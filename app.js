@@ -1,26 +1,26 @@
 import getWeatherData from "./utils/httpReq.js"
+import { showModal,removeModal } from "./utils/modal.js"
+
 const inputValue=document.querySelector("#search-input")
 const searchButton=document.querySelector("#search-button")
 const weatherBox=document.querySelector(".current-weather")
 const locationIcon=document.getElementById("location")
 const forecastData=document.querySelector(".forecast-Weather")
+const modalIcon=document.querySelector("#modal-button")
 
 
 
-const searchHandler=async ()=>{
+
+const searchHandler=async()=>{
 
     if(!inputValue.value.trim()){
-        alert("Invalid input")
+        showModal("Please enter city name!")
         return
     }
 
         const cityName=inputValue.value.trim()
-    
 
-    if(!cityName){
-        alert("Please enter city name!")
-        return
-    }
+   
     const currentData=await getWeatherData("current",cityName)
     renderCurrentWeather(currentData)
     const forecastData=await getWeatherData("forecast",cityName)
@@ -52,14 +52,16 @@ const renderCurrentWeather=async(data)=>{
     }
     catch{
         
-        alert(data.message)
+        showModal(data.message)
+
     }
     
 
 }
 
 const forecastfilter=async(data)=>{
-    console.log(data);
+
+    
     const filteredTime=await data.list.filter(item=>item.dt_txt.includes("12:00:00"))
     filteredTime.map(item=>{
     createForecastJSX(item,item.dt_txt.split(" ")[0])
@@ -102,11 +104,11 @@ const sucess=async (position)=>{
     
   }
 const error=(error)=>{
-    alert(error.message)
+    showModal(error.message)
 } 
 const locationHandler=()=>{
     if(!navigator.geolocation){
-        alert("Geolocation is not supported by your browser")
+        showModal("Geolocation is not supported by your browser")
     }else{
 
         navigator.geolocation.getCurrentPosition(sucess,error)
@@ -118,6 +120,7 @@ const locationHandler=()=>{
 
 searchButton.addEventListener("click",searchHandler)
 locationIcon.addEventListener("click",locationHandler)
+modalIcon.addEventListener("click",removeModal)
 
 
 
