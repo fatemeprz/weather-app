@@ -7,6 +7,7 @@ const weatherBox=document.querySelector(".current-weather")
 const locationIcon=document.getElementById("location")
 const forecastData=document.querySelector(".forecast-Weather")
 const modalIcon=document.querySelector("#modal-button")
+// const loder=document.querySelector("#loder")
 
 
 
@@ -20,7 +21,7 @@ const searchHandler=async()=>{
 
         const cityName=inputValue.value.trim()
 
-   
+        // initHandeler(cityName)
     const currentData=await getWeatherData("current",cityName)
     renderCurrentWeather(currentData)
     const forecastData=await getWeatherData("forecast",cityName)
@@ -99,6 +100,8 @@ const sucess=async (position)=>{
     renderCurrentWeather(currentData)
     const forecastData=await getWeatherData("forecast",position.coords)
     forecastfilter(forecastData)
+
+    
     
 
     
@@ -115,9 +118,28 @@ const locationHandler=()=>{
         
 
     }
+   
 }
 
+// const initHandeler=async(cityName)=>{
 
+    // try{
+
+        
+        
+    //     const currentData=await getWeatherData("current",cityName)
+    //     renderCurrentWeather(currentData)
+    //     const forecastData=await getWeatherData("forecast",cityName)
+    //     forecastfilter(forecastData)
+    //     loder.style.display="none"
+    // }
+    // catch{
+    //     showModal("something wrong")
+    // }
+
+// }
+
+// window.addEventListener("DOMContentLoaded",initHandeler)
 searchButton.addEventListener("click",searchHandler)
 locationIcon.addEventListener("click",locationHandler)
 modalIcon.addEventListener("click",removeModal)

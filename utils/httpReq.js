@@ -1,4 +1,6 @@
 import { showModal } from "./modal.js";
+const loder=document.querySelector("#loder")
+
 
 const API_KEY="8de96e03977a35091423bcb03881e99e";
 const BASE_URL=`https://api.openweathermap.org/data/2.5`
@@ -40,6 +42,7 @@ const getWeatherData=async(type,data)=>{
 
          const response=await fetch(url)
          const json=await response.json()
+        loder.style.display="none"
          return json
      }
      catch{
