@@ -110,3 +110,26 @@ body {
 .Weather-data span{
   color: var(--color-secondary)
 }
+.forecast-card{
+  text-align: center;
+  align-content: center;
+  width: 140px;
+  /* height: 180px; */
+  line-height: 25px;
+  background-color: #fff;
+  box-shadow:var(--color-secondary) 0px 10px 80px 0px ;
+  border-radius: 15px;
+  margin: 140px 40px 20px;
+  padding: 15px;
+  
+}
+.forecast-Weather{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+#forecast-day{
+  color: var(--color-primary);
+  margin-bottom: 15px;
+}

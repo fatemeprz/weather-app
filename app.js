@@ -1,15 +1,13 @@
-
+import getWeatherData from "./utils/httpReq.js"
 const inputValue=document.querySelector("#search-input")
 const searchButton=document.querySelector("#search-button")
 const weatherBox=document.querySelector(".current-weather")
 const locationIcon=document.getElementById("location")
-
-const API_KEY="8de96e03977a35091423bcb03881e99e";
-const BASE_URL=`https://api.openweathermap.org/data/2.5`
+const forecastData=document.querySelector(".forecast-Weather")
 
 
 
-const searchHandler=()=>{
+const searchHandler=async ()=>{
 
     if(!inputValue.value.trim()){
         alert("Invalid input")
@@ -23,11 +21,14 @@ const searchHandler=()=>{
         alert("Please enter city name!")
         return
     }
-    getCurrentWeatherByName(cityName)
+    const currentData=await getWeatherData("current",cityName)
+    renderCurrentWeather(currentData)
+    const forecastData=await getWeatherData("forecast",cityName)
+    forecastfilter(forecastData)
     
 }
 const renderCurrentWeather=async(data)=>{
-    console.log(data);
+    
     
     try{
 
@@ -56,31 +57,49 @@ const renderCurrentWeather=async(data)=>{
     
 
 }
-const getCurrentWeatherByName=async(cityName)=>{
 
-    const url=`${BASE_URL}/weather?q=${cityName}&appid=${API_KEY}&units=metric`
-    const response=await fetch(url)
-    const data=await response.json()
-    
-    renderCurrentWeather(data)
-          
+const forecastfilter=async(data)=>{
+    console.log(data);
+    const filteredTime=await data.list.filter(item=>item.dt_txt.includes("12:00:00"))
+    filteredTime.map(item=>{
+    createForecastJSX(item,item.dt_txt.split(" ")[0])
+       
+    })
+
 }
+const createForecastJSX=async(forecastfilter,filteredDate)=>{
 
-const getCurrentWeatherByLocation=async(lat,lon)=>{
-    const url=`${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+    forecastData.innerHTML=" "
+    const {main:{temp},weather}=await forecastfilter
 
-    const response=await fetch(url)
-    const data=await response.json()
-    
-    renderCurrentWeather(data)
+    let date = new Date(filteredDate);
+    let day = date.toLocaleString('en-us', {weekday: 'long'});
+
+    const forecastJSX=`
+    <div class="forecast-card"> 
+        <div id="temprature-icon">
+        <img src="https://openweathermap.org/img/w/${weather[0].icon}.png" />
+        </div>
+        <h4 id="forecast-day">${day}</h4>
+        <div id="temprature-degree">${Math.round(temp)} °C</div>
+        <div id="temprature-description">${weather[0].description}</div>
+        
+    </div>
+`
+
+    forecastData.innerHTML+=forecastJSX
 }
 
 const sucess=async (position)=>{
-    console.log(position);
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+    
 
-    const currentData=await getCurrentWeatherByLocation(lat,lon)
+    const currentData=await getWeatherData("current",position.coords)
+    renderCurrentWeather(currentData)
+    const forecastData=await getWeatherData("forecast",position.coords)
+    forecastfilter(forecastData)
+    
+
+    
   }
 const error=(error)=>{
     alert(error.message)
