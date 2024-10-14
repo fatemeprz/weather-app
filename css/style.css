@@ -28,6 +28,7 @@ body {
   background:linear-gradient(13deg,var(--color-primary) 47%,var(--color-secondary) 100%) ;
   box-shadow: var(--color-secondary) 0px 20px 100px 0px;
   position: relative;
+  margin-bottom: 120px;
 }
 .search img{
   width: 43px;
@@ -117,14 +118,13 @@ body {
   background-color: #fff;
   box-shadow:var(--color-secondary) 0px 10px 80px 0px ;
   border-radius: 15px;
-  margin: 120px 40px 20px;
   padding: 10px;
   
 }
 .forecast-Weather{
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
 
 }
 #forecast-day{
@@ -175,7 +175,6 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  /* display: inline-block; */
   display: none;
   margin-top: 30px;
   border-top-color: transparent;
@@ -188,5 +187,39 @@ body {
   }
   100%{
     transform: rotate(360deg);
+  }
+}
+
+@media(max-width:1024px){
+  .forecast-Weather{
+    display: grid;
+    grid-template-columns: repeat(4,140px);
+    grid-template-rows: repeat(2,170px);
+    row-gap: 60px;
+  
+  }
+}
+@media(max-width:768px){
+  .forecast-Weather{
+    grid-template-columns: repeat(3,140px);
+  }
+}
+@media(max-width:481px){
+  .forecast-Weather{
+    grid-template-columns: repeat(2,140px);
+    grid-template-rows: repeat(3,170px);
+  }
+  .current-weather{
+    padding: 20px 20px 10px;
+    width: 310px;
+    min-height: 170px;
+    border-radius: 25px;
+    line-height: 30px;
+  }
+  .search input{
+    width: 170px;
+  }
+  #name{
+    font-size: 1.5rem;
   }
 }
