@@ -7,7 +7,7 @@ const weatherBox=document.querySelector(".current-weather")
 const locationIcon=document.getElementById("location")
 const forecastData=document.querySelector(".forecast-Weather")
 const modalIcon=document.querySelector("#modal-button")
-// const loder=document.querySelector("#loder")
+const loder=document.querySelector("#loder")
 
 
 
@@ -21,7 +21,7 @@ const searchHandler=async()=>{
 
         const cityName=inputValue.value.trim()
 
-        // initHandeler(cityName)
+    
     const currentData=await getWeatherData("current",cityName)
     renderCurrentWeather(currentData)
     const forecastData=await getWeatherData("forecast",cityName)
@@ -121,25 +121,22 @@ const locationHandler=()=>{
    
 }
 
-// const initHandeler=async(cityName)=>{
+const initHandeler=async()=>{
 
-    // try{
-
+   
         
         
-    //     const currentData=await getWeatherData("current",cityName)
-    //     renderCurrentWeather(currentData)
-    //     const forecastData=await getWeatherData("forecast",cityName)
-    //     forecastfilter(forecastData)
-    //     loder.style.display="none"
-    // }
-    // catch{
-    //     showModal("something wrong")
-    // }
+        const currentData=await getWeatherData("current","tehran")
+        renderCurrentWeather(currentData)
+        const forecastData=await getWeatherData("forecast","tehran")
+        forecastfilter(forecastData)
+        loder.style.display="none"
+    
+  
 
-// }
+}
 
-// window.addEventListener("DOMContentLoaded",initHandeler)
+window.addEventListener("DOMContentLoaded",initHandeler)
 searchButton.addEventListener("click",searchHandler)
 locationIcon.addEventListener("click",locationHandler)
 modalIcon.addEventListener("click",removeModal)

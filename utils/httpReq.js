@@ -10,7 +10,7 @@ const getWeatherData=async(type,data)=>{
     let url=null;
     const defaultCity="tehran"
     
-
+    loder.style.display="inline-block"
     switch (type) {
 
         case "current":
@@ -42,7 +42,7 @@ const getWeatherData=async(type,data)=>{
 
          const response=await fetch(url)
          const json=await response.json()
-        loder.style.display="none"
+         loder.style.display="none"
          return json
      }
      catch{

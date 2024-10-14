@@ -118,7 +118,7 @@ body {
   box-shadow:var(--color-secondary) 0px 10px 80px 0px ;
   border-radius: 15px;
   margin: 120px 40px 20px;
-  padding: 15px;
+  padding: 10px;
   
 }
 .forecast-Weather{
@@ -175,7 +175,8 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  display: inline-block;
+  /* display: inline-block; */
+  display: none;
   margin-top: 30px;
   border-top-color: transparent;
   border-bottom-color: transparent;
